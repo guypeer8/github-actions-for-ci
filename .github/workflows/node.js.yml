@@ -24,7 +24,7 @@ jobs:
         with:
           name: webpack artifacts
           path: public/
-    needs: build
+    
   test:
     runs-on: ubuntu-latest
     
@@ -39,8 +39,14 @@ jobs:
         uses: actions/setup-node@v1
         with: 
           node-version: ${{ matrix.node-version }}
+      - uses: actions/download-artifact@master
+        with:
+          name: webpack artifacts
+          path: public
   
       - name: Run tests
         run: |
           npm install
           npm test
+          
+    needs: build
